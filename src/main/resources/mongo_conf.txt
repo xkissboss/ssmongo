@@ -1,0 +1,51 @@
+需要帐号密码
+ <!-- mongo对象 -->
+    <mongo:mongo-client id="mongo" replica-set="${mongo.hostport}" credentials="${mongo.username}:${mongo.password}@${mongo.databaseName}">
+        <mongo:client-options connections-per-host="${mongo.connectionsPerHost}" 
+        threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}" 
+        connect-timeout="${mongo.connectTimeout}" 
+        max-wait-time="${mongo.maxWaitTime}" 
+        socket-keep-alive="${mongo.socketKeepAlive}" 
+        socket-timeout="${mongo.socketTimeout}" />
+    </mongo:mongo-client>
+    
+    <mongo:db-factory dbname="database" mongo-ref="mongo"/>
+    
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongo" />
+        <constructor-arg name="databaseName" value="${mongo.databaseName}" />
+    </bean>
+    
+不需要帐号密码
+
+   <!-- mongo对象 -->
+    <mongo:mongo-client id="mongo" replica-set="${mongo.hostport}">
+        <mongo:client-options connections-per-host="${mongo.connectionsPerHost}" 
+        threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}" 
+        connect-timeout="${mongo.connectTimeout}" 
+        max-wait-time="${mongo.maxWaitTime}" 
+        socket-keep-alive="${mongo.socketKeepAlive}" 
+        socket-timeout="${mongo.socketTimeout}" />
+    </mongo:mongo-client>
+    
+    <mongo:db-factory dbname="database" mongo-ref="mongo"/>
+    
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongo" />
+        <constructor-arg name="databaseName" value="${mongo.databaseName}" />
+    </bean>
+    
+    
+log4j.rootLogger=INFO,stdout,file
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender 
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout 
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout.ConversionPattern=%-d{yyyy-MM-dd HH\:mm\:ss,SSS} [%c]-[%p] %m%n 
+
+log4j.appender.file=org.apache.log4j.DailyRollingFileAppender 
+log4j.appender.file.File=${spring_springmvc_jpa.root}/shirodemo.log
+log4j.appender.file.layout=org.apache.log4j.PatternLayout 
+log4j.appender.R.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c] [%p] - %m%n
+
+log4j.logger.org.hibernate.tool.hbm2ddl=info

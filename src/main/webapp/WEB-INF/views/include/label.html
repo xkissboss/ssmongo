@@ -1,0 +1,31 @@
+<div class="widget widget_sentence">
+	<h3>标签云</h3>
+	<div class="widget-sentence-content" id='ul_lable_list'>
+		<ul class="plinks ptags">
+			<li v-for="item in label_data"><a :href="'list/' + item.id"
+				v-bind:title=item.name draggable="false">{{item.name}} <span
+					class="badge">{{item.id}}</span></a></li>
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+	new Vue({
+		el : '#ul_lable_list',
+		data : {
+			label_data : {},
+			idx : 5
+		},
+		methods : {
+			get_labels : function() {
+				var that = this;
+				send('get_labels', {}, function(rsp) {
+					that.label_data = rsp.data;
+				});
+			}
+		},
+		created : function() {
+			this.get_labels();
+		}
+	})
+</script>

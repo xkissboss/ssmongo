@@ -1,0 +1,21 @@
+<script type="text/javascript">
+
+	$.post('get_posts', {}, function(data) {
+		var json = JSON.parse(data);;
+		if (json.code === 1) {
+			var result = '';
+			$.each(json.data, function (idx, value) {
+				result += '<li><a title="' + value.title +'" href="index/detail/' + value.id +'"><span class="thumbnail"> <img class="thumb" data-original="static/images/201610181739277776.jpg" src="static/images/201610181739277776.jpg" alt="' + value.title +'" style="display: block;"> </span><span class="text">' + value.details +'</span><span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-11-01 </span><span class="muted"><i class="glyphicon glyphicon-eye-open"></i>' + idx + '</span></a></li>';
+			});
+			$('#ul_new_review_article').html(result);
+		}
+	});
+
+</script>
+
+<div class="widget widget_hot">
+	<h3>最新评论文章</h3>
+	<ul id="ul_new_review_article">
+
+	</ul>
+</div>
